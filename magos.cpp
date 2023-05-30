@@ -1,59 +1,59 @@
-#include <bits/stdc++.h>
+#include<bits/stdc++.h>
+ 
+ using namespace std;
 
-using namespace std;
-
-int main()
-{
-    int n,i,j, somadp = 0,somads = 0;
-    cin >> n;
-    int x = n;
-    vector <int> somal(n);
-    vector <int> somac(n);
-    vector <int> linha(n);
-    vector <int> coluna(n);
-    vector <vector <int>> matriz (n,vector<int>(n));
-    for (i = 0; i < n; i++)
-    {
-        for (j = 0; j < n; j++)
-        {
-            cin >> matriz[i][j];
-        }
+int main(){
+int n, x;
+cin >> n;
+x = n;
+int matriz [n+1][n+1];
+vector<int> somalinhas(n+1);
+vector<int> somaColunas(n+1);
+int somadiagonal1 = 0;
+int somadiagonal2 = 0;
+for(int i = 1; i <= n;i++){
+    for(int j = 1; j <= n; j++){
+        cin >> matriz [i][j];
     }
-    for (i = 0; i < n; i++)
-    {
-        for (j = 0; j < n; j++)
-        {
-            somal[i] += matriz [i][j];
-            if (i == j)
-            {
-                somadp += matriz [i][j];
-            }
-        }
-    }
-    for (j = 0; j < n; j++)
-    {
-        for (i = 0; i < n; i++)
-        {
-            somac[j] += matriz [i][j];
-        }
-    }
-    for (i = 0; i < n; i++)
-    {
-        somads += matriz[i][x-1];
-        x--;
-    }
-    for (i = 0; i < n-1; i++)
-    {
-        if(somal[i] == somal[i+1])
-        {
-            
+}
+    for(int i = 1; i <= n; i++){
+        for(int j = 1; j <= n; j++){
+            somaColunas[i] += matriz[j][i];
+            somalinhas[i] += matriz[i][j];
+            if(i==j){
+            somadiagonal1 += matriz [i][j];
+            }      
         }
     }
 
-    //for (i = 0; i < n; i++)
-    //{
+    while(x > 0){
+            somadiagonal2 += matriz [x][n-(x-1)];
+            x--;
+    }
 
-    //}
-    cout << somads << endl;
-    return 0;
+    int somalinha = somalinhas[1];
+    bool col = false, lin = false;
+    for (int i = 1; i <= n; i++){
+        if (somalinha == somalinhas[i]){
+            lin = true;
+        }else{ 
+            lin = false;
+        }
+
+        if (somalinha == somaColunas[i]){
+            col = true;
+        }else{
+            col = false;
+        }
+    }
+
+    
+    if (somadiagonal1==somadiagonal2 && col && lin && somadiagonal1 == somalinha){    
+        cout << somadiagonal1 << endl;
+        return 0;
+    }
+    else{
+        cout << "-1" << endl;
+        return 0;
+    }
 }
